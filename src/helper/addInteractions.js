@@ -58,19 +58,15 @@ const addInteractions = WrappedComponent => {
     translateX = new Animated.Value(0)
     translateY = new Animated.Value(0)
     lastOffset = { x: 0, y: 0 }
-    onTranslateGestureEvent = Animated.event([
-      {
-        nativeEvent: {
-          translationX: this.translateX,
-          translationY: this.translateY,
-        },
-      },
-    ])
+    onTranslateGestureEvent = ev => {
+      this.translateX.setValue(ev.nativeEvent.translationX * this.lastScale)
+      this.translateY.setValue(ev.nativeEvent.translationY * this.lastScale)
+    }
 
     handleTranslationStateChange = ev => {
       if (ev.nativeEvent.oldState === State.ACTIVE) {
-        this.lastOffset.x += ev.nativeEvent.translationX
-        this.lastOffset.y += ev.nativeEvent.translationY
+        this.lastOffset.x += ev.nativeEvent.translationX * this.lastScale
+        this.lastOffset.y += ev.nativeEvent.translationY * this.lastScale
         this.translateX.setOffset(this.lastOffset.x)
         this.translateX.setValue(0)
         this.translateY.setOffset(this.lastOffset.y)
