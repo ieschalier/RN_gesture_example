@@ -8,6 +8,8 @@ import {
   State,
 } from 'react-native-gesture-handler'
 
+import Cursors from '../Components/Cursors'
+
 const addInteractions = WrappedComponent => {
   return class ComponentWithInteractions extends Component {
     static propTypes = {
@@ -115,7 +117,9 @@ const addInteractions = WrappedComponent => {
                   ],
                 }}
               >
-                <WrappedComponent enabled={enabled} />
+                <Cursors enabled={enabled}>
+                  <WrappedComponent enabled={enabled} />
+                </Cursors>
               </Animated.View>
             </PinchGestureHandler>
           </PanGestureHandler>
